@@ -1,6 +1,7 @@
 <template>
   <div>
     <button v-on:click="refresh">Refresh message!</button>
+    <button v-on:click="onButtonClick">Run event passed from parent!</button>
   </div>
 </template>
 
@@ -11,6 +12,14 @@
   export default {
     name: 'MessageRefresher',
     extends: BasicComponent,
+    props: {
+      // Function defined in parent
+      onButtonClick: {
+        type: Function,
+        default: () => {
+        }
+      },
+    },
     methods: {
       refresh() {
         this.dispatch(HTTP_UPDATE_MESSAGE).then(() => console.log('Can chain actions!'))

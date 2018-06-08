@@ -9,6 +9,7 @@
 <script>
   export default {
     name: 'ValidatedInput',
+    // Props should be immutable
     props: {
       label: {
         type: String,

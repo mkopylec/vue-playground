@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <validated-input label="Some label"/>
+    <validated-input ref="someInput" label="Some label"/>
     <message-box/>
-    <message-refresher/>
+    <message-refresher v-bind:onButtonClick="displayAlert"/>
     <error-box/>
+    <button v-on:click="getUserInput">Get user input</button>
   </div>
 </template>
 
 <script>
   import {store} from "./store/ApplicationStore";
+  import BasicComponent from './components/BasicComponent'
   import ValidatedInput from "./components/ValidatedInput";
   import MessageBox from "./components/MessageBox";
   import MessageRefresher from "./components/MessageRefresher";
@@ -16,8 +18,20 @@
 
   export default {
     name: 'app',
+    extends: BasicComponent,
     store,
-    components: {ErrorBox, MessageRefresher, MessageBox, ValidatedInput}
+    components: {ErrorBox, MessageRefresher, MessageBox, ValidatedInput},
+    methods: {
+      // Accessing children data using ref
+      getUserInput() {
+        const message = this.getChildData('someInput').message;
+        console.log('User input: ' + message);
+      },
+      // Function passed to child
+      displayAlert() {
+        alert('I am a function passed from parent to child');
+      }
+    }
   }
 </script>
 
